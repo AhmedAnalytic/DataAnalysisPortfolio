@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Ahmed Ali Osman | 3D Data Analyst Portfolio</title>
+    <!-- Google Fonts & Font Awesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            overflow-x: hidden;
+            transition: background-color 0.4s ease, color 0.3s ease;
+        }
+
+        /* Light/Dark Mode Variables - Premium Theme */
+        body.light-mode {
+            --bg-primary: #f8fafc;
+            --bg-secondary: #ffffff;
+            --text-primary: #0f172a;
+            --text-secondary: #334155;
+            --card-bg: rgba(255, 255, 255, 0.85);
+            --card-border: rgba(0, 0, 0, 0.08);
+            --glass-bg: rgba(255, 255, 255, 0.7);
+            --shadow: 0 20px 35px -12px rgba(0,0,0,0.08);
+            --btn-outline: #3b82f6;
+            --skill-bg: rgba(59,130,246,0.1);
+            --accent-glow: rgba(59,130,246,0.2);
+            --header-bg: rgba(255,255,255,0.8);
+        }
+
+        body.dark-mode {
+            --bg-primary: #030712;
+            --bg-secondary: #0f172a;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --card-bg: rgba(15, 25, 45, 0.75);
+            --card-border: rgba(59, 130, 246, 0.3);
+            --glass-bg: rgba(10, 20, 35, 0.7);
+            --shadow: 0 20px 35px -12px rgba(0,0,0,0.5);
+            --btn-outline: #60a5fa;
+            --skill-bg: rgba(59, 130, 246, 0.15);
+            --accent-glow: rgba(96, 165, 250, 0.25);
+            --header-bg: rgba(10,20,35,0.85);
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+        }
+
+        /* Canvas 3D Background */
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            display: block;
+            transition: opacity 0.5s ease;
+        }
+        body.light-mode canvas { opacity: 0.4; }
+        body.dark-mode canvas { opacity: 0.85; }
+
+        /* Content Overlay */
+        .content {
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Floating Header Navigation */
+        .main-header {
+            position: sticky;
+            top: 20px;
+            z-index: 100;
+            display: flex;
+            justify-content: center;
+            margin: 0 20px;
+        }
+        .nav-container {
+            background: var(--header-bg);
+            backdrop-filter: blur(16px);
+            border-radius: 60px;
+            padding: 0.8rem 2rem;
+            border: 1px solid var(--card-border);
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1.5rem;
+        }
+        .nav-container a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.2s;
+            font-size: 0.95rem;
+        }
+        .nav-container a:hover { color: #3b82f6; transform: translateY(-2px); }
+
+        /* Theme Toggle Button */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 101;
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border-radius: 60px;
+            padding: 10px 20px;
+            cursor: pointer;
+            border: 1px solid var(--card-border);
+            box-shadow: var(--shadow);
+            font-weight: 500;
+            transition: all 0.3s;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+        }
+        .theme-toggle:hover {
+            transform: scale(1.05);
+            border-color: var(--btn-outline);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 6rem 2rem 4rem;
+            background: radial-gradient(circle at 30% 20%, transparent 0%, var(--bg-primary) 85%);
+        }
+        .hero h1 {
+            font-size: 4.8rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #3b82f6, #a855f7, #ec489a);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+        }
+        .hero .highlight {
+            font-size: 1.6rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+        .hero .desc {
+            max-width: 700px;
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+        .btn-group {
+            display: flex;
+            gap: 1.2rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .btn {
+            padding: 0.85rem 2rem;
+            border-radius: 40px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: 1px solid var(--btn-outline);
+            background: var(--glass-bg);
+            backdrop-filter: blur(5px);
+            color: var(--text-primary);
+        }
+        .btn-primary {
+            background: linear-gradient(95deg, #2563eb, #7c3aed);
+            border: none;
+            color: white;
+            box-shadow: 0 4px 12px rgba(37,99,235,0.3);
+        }
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px -5px rgba(59,130,246,0.5);
+        }
+        .btn-outline:hover {
+            background: rgba(59,130,246,0.2);
+            transform: translateY(-3px);
+        }
+
+        /* Section Styling */
+        .section {
+            padding: 5rem 2rem;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+        .section-title {
+            font-size: 2.8rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 3rem;
+            background: linear-gradient(135deg, var(--text-primary), var(--btn-outline));
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+
+        /* Skills Grid - Mastered & Future */
+        .skills-mastered, .skills-future {
+            margin-bottom: 2.5rem;
+        }
+        .skills-subtitle {
+            font-size: 1.6rem;
+            font-weight: 600;
+            margin-bottom: 1.2rem;
+            color: var(--text-primary);
+            border-left: 4px solid #3b82f6;
+            padding-left: 1rem;
+        }
+        .skills-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+        }
+        .skill-card {
+            background: var(--skill-bg);
+            backdrop-filter: blur(4px);
+            border-radius: 60px;
+            padding: 0.8rem 1.8rem;
+            border: 1px solid var(--card-border);
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            transition: all 0.3s;
+        }
+        .skill-card i { color: #3b82f6; font-size: 1.2rem; }
+        .skill-card:hover { transform: translateY(-5px); border-color: #a855f7; background: var(--accent-glow); }
+        .future-skill {
+            border-style: dashed;
+            opacity: 0.85;
+        }
+
+        /* Projects Grid */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 2rem;
+        }
+        .project-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            border-radius: 32px;
+            padding: 1.8rem;
+            border: 1px solid var(--card-border);
+            transition: all 0.35s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            box-shadow: var(--shadow);
+        }
+        .project-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            border-color: #8b5cf6;
+            background: var(--glass-bg);
+        }
+        .project-icon { font-size: 2.8rem; margin-bottom: 1rem; }
+        .project-card h3 { font-size: 1.5rem; margin-bottom: 0.8rem; }
+        .project-card p { color: var(--text-secondary); line-height: 1.5; margin-bottom: 1rem; }
+        .tech-badge {
+            display: inline-block;
+            background: rgba(59,130,246,0.2);
+            padding: 0.25rem 1rem;
+            border-radius: 30px;
+            font-size: 0.75rem;
+            margin-right: 0.6rem;
+            margin-bottom: 0.6rem;
+            border: 1px solid var(--btn-outline);
+        }
+        .project-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin-top: 1rem;
+        }
+        .project-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #a5b4fc;
+            text-decoration: none;
+            transition: gap 0.2s;
+        }
+        .project-link:hover { gap: 0.6rem; color: #3b82f6; }
+
+        /* Contact Icons */
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+        .contact-icon {
+            font-size: 1.8rem;
+            background: var(--glass-bg);
+            width: 70px;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.3s;
+            border: 1px solid var(--card-border);
+            color: var(--text-primary);
+            text-decoration: none;
+        }
+        .contact-icon:hover {
+            transform: scale(1.15);
+            background: #25D366;
+            color: white;
+            border-color: #25D366;
+        }
+        .contact-icon.phone:hover { background: #3b82f6; }
+        .contact-icon.email:hover { background: #ea4335; }
+        
+        footer {
+            text-align: center;
+            padding: 2rem;
+            font-size: 0.85rem;
+            border-top: 1px solid var(--card-border);
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.8rem; }
+            .hero .highlight { font-size: 1.2rem; }
+            .section-title { font-size: 2rem; }
+            .section { padding: 3rem 1.5rem; }
+            .nav-container { gap: 0.8rem; padding: 0.6rem 1.2rem; }
+            .theme-toggle { top: 16px; right: 16px; padding: 6px 14px; font-size: 0.8rem; }
+        }
+    </style>
+</head>
+<body class="dark-mode">
+    <div class="theme-toggle" id="themeToggle">
+        <i class="fas fa-moon" id="themeIcon"></i> <span id="themeText">Dark</span>
+    </div>
+
+    <!-- Sticky Header Navigation -->
+    <div class="main-header">
+        <div class="nav-container">
+            <a href="#home">Home</a>
+            <a href="#skills">Skills</a>
+            <a href="#projects">Projects</a>
+            <a href="#contact">Contact</a>
+        </div>
+    </div>
+
+    <canvas id="bg-canvas"></canvas>
+
+    <div class="content">
+        <!-- Hero Section -->
+        <div class="hero" id="home">
+            <h1>Ahmed Ali Osman</h1>
+            <div class="highlight">📊 Data Analyst | SQL • Excel • Power BI Specialist</div>
+            <div class="desc">
+                Turning raw data into actionable intelligence. Expert in data cleaning, visualization, and dashboard creation.
+                I transform complex datasets into strategic business stories.
+            </div>
+            <div class="btn-group">
+                <a href="#projects" class="btn btn-primary"><i class="fas fa-chart-line"></i> Explore Projects</a>
+                <a href="#contact" class="btn btn-outline"><i class="fas fa-phone-alt"></i> Contact Me</a>
+            </div>
+        </div>
+
+        <!-- Skills Section: Mastered + Future Roadmap -->
+        <div class="section" id="skills">
+            <div class="section-title">⚡ Analytics Arsenal</div>
+            <div class="skills-mastered">
+                <div class="skills-subtitle"><i class="fas fa-check-circle" style="color:#22c55e;"></i> Currently Mastered</div>
+                <div class="skills-grid">
+                    <div class="skill-card"><i class="fas fa-database"></i> SQL (MySQL, BigQuery)</div>
+                    <div class="skill-card"><i class="fas fa-file-excel"></i> Advanced Excel / Power Query</div>
+                    <div class="skill-card"><i class="fas fa-chart-pie"></i> Power BI / DAX</div>
+                    <div class="skill-card"><i class="fas fa-chart-bar"></i> Data Visualization</div>
+                    <div class="skill-card"><i class="fas fa-robot"></i> Data Cleaning & ETL</div>
+                </div>
+            </div>
+            <div class="skills-future">
+                <div class="skills-subtitle"><i class="fas fa-chart-line" style="color:#f59e0b;"></i> Learning Roadmap (Future)</div>
+                <div class="skills-grid">
+                    <div class="skill-card future-skill"><i class="fab fa-python"></i> Python (Pandas, NumPy)</div>
+                    <div class="skill-card future-skill"><i class="fas fa-chart-line"></i> R / Tidyverse</div>
+                    <div class="skill-card future-skill"><i class="fas fa-square-root-alt"></i> Statistics (Hypothesis Testing)</div>
+                    <div class="skill-card future-skill"><i class="fas fa-cloud"></i> Cloud Analytics (AWS/GCP)</div>
+                    <div class="skill-card future-skill"><i class="fas fa-brain"></i> Machine Learning Basics</div>
+                    <div class="skill-card future-skill"><i class="fas fa-table"></i> Tableau</div>
+                    <div class="skill-card future-skill"><i class="fas fa-git-alt"></i> Git / Version Control</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Projects: Data Science Jobs (3 cards) + Cafe Sales (3 separate cards) with updated links -->
+        <div class="section" id="projects">
+            <div class="section-title">📁 Featured Analytics Projects</div>
+            
+            <!-- Data Science Jobs Collection -->
+            <div class="skills-subtitle" style="margin-top: 0;"><i class="fas fa-briefcase"></i> Data Science Jobs Analysis</div>
+            <div class="projects-grid" style="margin-bottom: 3rem;">
+                <!-- SQL Project -->
+                <div class="project-card">
+                    <div class="project-icon"><i class="fas fa-database" style="color:#00758f;"></i></div>
+                    <h3>DS Jobs: SQL Cleaning</h3>
+                    <p>Comprehensive data cleaning of 1000+ job listings: removed duplicates, standardized job titles, salary estimates, and categorized industries using advanced MySQL queries.</p>
+                    <div><span class="tech-badge">MySQL</span><span class="tech-badge">ETL</span></div>
+                    <a href="https://github.com/AhmedAnalytic/Data-Science-Jobs-Analysis/blob/main/Cleaned_DS_jobs.sql" target="_blank" class="project-link">View SQL Script <i class="fas fa-external-link-alt"></i></a>
+                </div>
+                <!-- Excel Project -->
+                <div class="project-card">
+                    <div class="project-icon"><i class="fas fa-file-excel" style="color:#1f7b4d;"></i></div>
+                    <h3>DS Jobs: Cleaned Excel</h3>
+                    <p>Processed and cleaned dataset in Excel with Power Query. Handled missing values, standardized formats, and prepared structured data for analysis.</p>
+                    <div><span class="tech-badge">Excel</span><span class="tech-badge">Power Query</span></div>
+                    <a href="https://github.com/AhmedAnalytic/Data-Science-Jobs-Analysis/blob/main/Cleaned_DS_jobs.xlsx" target="_blank" class="project-link">Download Excel <i class="fas fa-download"></i></a>
+                </div>
+                <!-- Power BI Viz -->
+                <div class="project-card">
+                    <div class="project-icon"><i class="fas fa-chart-pie" style="color:#f2c811;"></i></div>
+                    <h3>DS Jobs: Power BI Dashboard</h3>
+                    <p>Interactive dashboard visualizing job trends, salary distributions, and industry insights with dynamic filters and DAX measures.</p>
+                    <div><span class="tech-badge">Power BI</span><span class="tech-badge">DAX</span></div>
+                    <a href="https://github.com/AhmedAnalytic/Data-Science-Jobs-Analysis/blob/main/Data%20Science%20Job%20Visualization.pbix" target="_blank" class="project-link">Preview Dashboard <i class="fas fa-chart-line"></i></a>
+                </div>
+            </div>
+
+            <!-- Cafe Sales Collection -->
+            <div class="skills-subtitle"><i class="fas fa-mug-hot"></i> Cafe Sales Data Pipeline</div>
+            <div class="projects-grid">
+                <!-- Cafe Excel -->
+                <div class="project-card">
+                    <div class="project-icon"><i class="fas fa-file-excel" style="color:#1f7b4d;"></i></div>
+                    <h3>Cafe Sales: Cleaned Excel</h3>
+                    <p>Initial data cleaning and preprocessing of cafe sales data using Excel: removed duplicates, standardized date formats, and corrected product categories.</p>
+                    <div><span class="tech-badge">Excel</span><span class="tech-badge">Data Cleaning</span></div>
+                    <a href="https://github.com/AhmedAnalytic/Cafe-Sales-Data-Cleaning/blob/main/Clean_cafe_sales.xlsx" target="_blank" class="project-link">View Excel File <i class="fas fa-external-link-alt"></i></a>
+                </div>
+                <!-- Cafe SQL -->
+                <div class="project-card">
+                    <div class="project-icon"><i class="fas fa-database" style="color:#00758f;"></i></div>
+                    <h3>Cafe Sales: SQL Script</h3>
+                    <p>Advanced MySQL script for data standardization, handling outliers, detecting duplicates, and calculating missing values using complex CASE statements and mathematical validations.</p>
+                    <div><span class="tech-badge">MySQL</span><span class="tech-badge">Query Optimization</span></div>
+                    <a href="https://github.com/AhmedAnalytic/Cafe-Sales-Data-Cleaning/blob/main/Clean_cafe_sales.sql" target="_blank" class="project-link">View SQL Script <i class="fas fa-code"></i></a>
+                </div>
+                <!-- Cafe Power BI -->
+                <div class="project-card">
+                    <div class="project-icon"><i class="fas fa-chart-pie" style="color:#f2c811;"></i></div>
+                    <h3>Cafe Sales: Power BI Dashboard</h3>
+                    <p>Interactive Power BI report with sales KPIs, peak hour analysis, and product performance metrics. Built using DAX measures and custom visuals.</p>
+                    <div><span class="tech-badge">Power BI</span><span class="tech-badge">DAX</span></div>
+                    <a href="https://github.com/AhmedAnalytic/Cafe-Sales-Data-Cleaning/blob/main/Clean_cafe_sales.pbix" target="_blank" class="project-link">Launch Dashboard <i class="fas fa-chart-simple"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact Section with WhatsApp, Phone, Email -->
+        <div class="section" id="contact">
+            <div class="section-title">📬 Let's Connect</div>
+            <div class="contact-links">
+                <a href="https://github.com/AhmedAnalytic" target="_blank" class="contact-icon"><i class="fab fa-github"></i></a>
+                <a href="https://wa.me/254721237883" target="_blank" class="contact-icon"><i class="fab fa-whatsapp"></i></a>
+                <a href="tel:+254721237883" target="_blank" class="contact-icon phone"><i class="fas fa-phone-alt"></i></a>
+                <a href="mailto:ahmeyali2236@gmail.com" target="_blank" class="contact-icon email"><i class="fas fa-envelope"></i></a>
+                <a href="https://www.linkedin.com/in/ahmed-ali-883129359" target="_blank" class="contact-icon"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+            <p style="text-align: center; margin-top: 2rem; font-size: 1rem;">
+                📞 <strong>Phone / WhatsApp:</strong> +254 721 237883 &nbsp;&nbsp;|&nbsp;&nbsp;
+                📧 <strong>Email:</strong> ahmeyali2236@gmail.com
+            </p>
+            <p style="text-align: center; margin-top: 0.5rem; color: var(--text-secondary);">📍 Nairobi, Kenya | Open for freelance & full-time opportunities</p>
+        </div>
+        <footer>© 2026 Ahmed Ali Osman — From Raw Data to Actionable Intelligence ✨</footer>
+    </div>
+
+    <!-- Three.js Enhanced 3D Scene: Beautiful Particle Galaxy + Rotating Core -->
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.128.0/build/three.module.js"
+            }
+        }
+    </script>
+    <script type="module">
+        import * as THREE from 'three';
+
+        const canvas = document.getElementById('bg-canvas');
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color(0x030712);
+        scene.fog = new THREE.FogExp2(0x030712, 0.006);
+        
+        const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.set(0, 1.2, 13);
+        camera.lookAt(0, 0, 0);
+        
+        const renderer = new THREE.WebGLRenderer({ canvas, alpha: false });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(window.devicePixelRatio);
+        
+        // Lights: dynamic & beautiful
+        const ambientLight = new THREE.AmbientLight(0x1a1f2e, 0.5);
+        scene.add(ambientLight);
+        const mainLight = new THREE.DirectionalLight(0xffffff, 1);
+        mainLight.position.set(2, 4, 3);
+        scene.add(mainLight);
+        const colorLight1 = new THREE.PointLight(0x3b82f6, 0.6);
+        colorLight1.position.set(2, 1, 3);
+        scene.add(colorLight1);
+        const colorLight2 = new THREE.PointLight(0xa855f7, 0.5);
+        colorLight2.position.set(-2, 1.5, 4);
+        scene.add(colorLight2);
+        const backLight = new THREE.PointLight(0xec489a, 0.4);
+        backLight.position.set(0, 2, -6);
+        scene.add(backLight);
+        
+        // Central elegant object: Icosahedron with wireframe + glow
+        const coreGeo = new THREE.IcosahedronGeometry(1.3, 0);
+        const coreMat = new THREE.MeshStandardMaterial({ color: 0x3b82f6, emissive: 0x1e3a8a, emissiveIntensity: 0.7, metalness: 0.6, roughness: 0.2 });
+        const coreMesh = new THREE.Mesh(coreGeo, coreMat);
+        scene.add(coreMesh);
+        
+        // Wireframe outer shell
+        const wireframeGeo = new THREE.IcosahedronGeometry(1.45, 0);
+        const wireframeMat = new THREE.MeshBasicMaterial({ color: 0x8b5cf6, wireframe: true, transparent: true, opacity: 0.25 });
+        const wireframeObj = new THREE.Mesh(wireframeGeo, wireframeMat);
+        scene.add(wireframeObj);
+        
+        // Rotating rings
+        const ringGeo = new THREE.TorusGeometry(1.9, 0.05, 128, 400);
+        const ringMat = new THREE.MeshStandardMaterial({ color: 0xa855f7, emissive: 0x6d28d9, emissiveIntensity: 0.5 });
+        const ring = new THREE.Mesh(ringGeo, ringMat);
+        scene.add(ring);
+        
+        const ring2Geo = new THREE.TorusGeometry(2.4, 0.04, 128, 400);
+        const ring2Mat = new THREE.MeshStandardMaterial({ color: 0x06b6d4, emissive: 0x0891b2, emissiveIntensity: 0.4 });
+        const ring2 = new THREE.Mesh(ring2Geo, ring2Mat);
+        scene.add(ring2);
+        
+        // Floating data cubes (data points)
+        const cubes = [];
+        for(let i = 0; i < 120; i++) {
+            const size = 0.06 + Math.random() * 0.09;
+            const matCube = new THREE.MeshStandardMaterial({ color: 0x60a5fa, emissive: 0x2563eb, emissiveIntensity: 0.2 });
+            const cube = new THREE.Mesh(new THREE.BoxGeometry(size, size, size), matCube);
+            const radius = 2.4 + Math.random() * 2.2;
+            const angle = Math.random() * Math.PI * 2;
+            cube.userData = { radius, angle, speed: 0.002 + Math.random() * 0.007, yOffset: (Math.random() - 0.5) * 2.2 };
+            cube.position.x = Math.cos(angle) * radius;
+            cube.position.z = Math.sin(angle) * radius;
+            cube.position.y = cube.userData.yOffset;
+            scene.add(cube);
+            cubes.push(cube);
+        }
+        
+        // Particle Galaxy (beautiful dust)
+        const particleCount = 4000;
+        const particleGeo = new THREE.BufferGeometry();
+        const posArray = new Float32Array(particleCount * 3);
+        for(let i = 0; i < particleCount; i++) {
+            const radius = 3.5 + Math.random() * 5;
+            const theta = Math.random() * Math.PI * 2;
+            const phi = Math.acos(2 * Math.random() - 1);
+            posArray[i*3] = radius * Math.sin(phi) * Math.cos(theta);
+            posArray[i*3+1] = (Math.random() - 0.5) * 4;
+            posArray[i*3+2] = radius * Math.sin(phi) * Math.sin(theta);
+        }
+        particleGeo.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+        const particleMat = new THREE.PointsMaterial({ color: 0x8b5cf6, size: 0.045, transparent: true, blending: THREE.AdditiveBlending });
+        const particles = new THREE.Points(particleGeo, particleMat);
+        scene.add(particles);
+        
+        // Starfield background
+        const starCount = 2000;
+        const starGeo = new THREE.BufferGeometry();
+        const starPos = [];
+        for(let i = 0; i < starCount; i++) {
+            starPos.push((Math.random() - 0.5) * 200);
+            starPos.push((Math.random() - 0.5) * 100);
+            starPos.push((Math.random() - 0.5) * 90 - 30);
+        }
+        starGeo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(starPos), 3));
+        const starMatObj = new THREE.PointsMaterial({ color: 0xaaccff, size: 0.07, transparent: true, opacity: 0.7, blending: THREE.AdditiveBlending });
+        const stars = new THREE.Points(starGeo, starMatObj);
+        scene.add(stars);
+        
+        let time = 0;
+        function animate() {
+            requestAnimationFrame(animate);
+            time += 0.012;
+            
+            coreMesh.rotation.y = time * 0.3;
+            coreMesh.rotation.x = Math.sin(time * 0.4) * 0.2;
+            wireframeObj.rotation.y = time * 0.35;
+            wireframeObj.rotation.x = Math.sin(time * 0.5) * 0.15;
+            ring.rotation.x = Math.PI / 2;
+            ring.rotation.z = time * 0.2;
+            ring2.rotation.x = Math.PI / 2 + 0.2;
+            ring2.rotation.z = -time * 0.18;
+            
+            cubes.forEach(cube => {
+                cube.userData.angle += cube.userData.speed;
+                const rad = cube.userData.radius;
+                const ang = cube.userData.angle;
+                cube.position.x = Math.cos(ang) * rad;
+                cube.position.z = Math.sin(ang) * rad;
+                cube.position.y = cube.userData.yOffset + Math.sin(time * 1.3 + ang) * 0.1;
+                cube.rotation.x += 0.02;
+                cube.rotation.y += 0.03;
+            });
+            
+            particles.rotation.y = time * 0.02;
+            stars.rotation.y = time * 0.003;
+            
+            camera.position.x += (Math.sin(time * 0.08) * 0.2 - camera.position.x) * 0.02;
+            camera.position.y += (Math.sin(time * 0.12) * 0.15 - camera.position.y) * 0.02;
+            camera.lookAt(0, 0.3, 0);
+            
+            renderer.render(scene, camera);
+        }
+        animate();
+        
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+        
+        // Theme switch with scene color update
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+        const themeIcon = document.getElementById('themeIcon');
+        const themeText = document.getElementById('themeText');
+        
+        function updateThemeColors(theme) {
+            if(theme === 'light') {
+                scene.background.setHex(0xf1f5f9);
+                scene.fog.color.setHex(0xf1f5f9);
+                scene.fog.density = 0.01;
+                ambientLight.intensity = 0.6;
+                mainLight.intensity = 0.9;
+                colorLight1.intensity = 0.7;
+                colorLight2.intensity = 0.6;
+                particleMat.color.setHex(0x3b82f6);
+                starMatObj.color.setHex(0x64748b);
+            } else {
+                scene.background.setHex(0x030712);
+                scene.fog.color.setHex(0x030712);
+                scene.fog.density = 0.006;
+                ambientLight.intensity = 0.5;
+                mainLight.intensity = 1;
+                colorLight1.intensity = 0.6;
+                colorLight2.intensity = 0.5;
+                particleMat.color.setHex(0x8b5cf6);
+                starMatObj.color.setHex(0xaaccff);
+            }
+        }
+        
+        themeToggle.addEventListener('click', () => {
+            if(body.classList.contains('dark-mode')) {
+                body.classList.remove('dark-mode');
+                body.classList.add('light-mode');
+                themeIcon.className = 'fas fa-sun';
+                themeText.innerText = 'Light';
+                updateThemeColors('light');
+            } else {
+                body.classList.remove('light-mode');
+                body.classList.add('dark-mode');
+                themeIcon.className = 'fas fa-moon';
+                themeText.innerText = 'Dark';
+                updateThemeColors('dark');
+            }
+        });
+        
+        if(body.classList.contains('dark-mode')) updateThemeColors('dark');
+        else updateThemeColors('light');
+        
+        // Interactive mouse light
+        document.addEventListener('mousemove', (e) => {
+            const x = (e.clientX / window.innerWidth) * 2 - 1;
+            const y = (e.clientY / window.innerHeight) * 2 - 1;
+            colorLight1.intensity = 0.5 + Math.abs(x) * 0.4;
+            colorLight2.intensity = 0.4 + Math.abs(y) * 0.4;
+        });
+    </script>
+</body>
+</html>
