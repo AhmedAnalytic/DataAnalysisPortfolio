@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Ahmed Ali Osman | 3D Data Analyst Portfolio</title>
     <!-- Google Fonts & Font Awesome -->
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -20,7 +20,7 @@
             transition: background-color 0.4s ease, color 0.3s ease;
         }
 
-        /* Light/Dark Mode Variables - Premium Theme */
+        /* Light/Dark Mode Variables */
         body.light-mode {
             --bg-primary: #f8fafc;
             --bg-secondary: #ffffff;
@@ -67,8 +67,8 @@
             display: block;
             transition: opacity 0.5s ease;
         }
-        body.light-mode canvas { opacity: 0.4; }
-        body.dark-mode canvas { opacity: 0.85; }
+        body.light-mode canvas { opacity: 0.35; }
+        body.dark-mode canvas { opacity: 0.8; }
 
         /* Content Overlay */
         .content {
@@ -76,46 +76,16 @@
             z-index: 10;
         }
 
-        /* Floating Header Navigation */
-        .main-header {
-            position: sticky;
-            top: 20px;
-            z-index: 100;
-            display: flex;
-            justify-content: center;
-            margin: 0 20px;
-        }
-        .nav-container {
-            background: var(--header-bg);
-            backdrop-filter: blur(16px);
-            border-radius: 60px;
-            padding: 0.8rem 2rem;
-            border: 1px solid var(--card-border);
-            box-shadow: var(--shadow);
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 1.5rem;
-        }
-        .nav-container a {
-            color: var(--text-primary);
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.2s;
-            font-size: 0.95rem;
-        }
-        .nav-container a:hover { color: #3b82f6; transform: translateY(-2px); }
-
-        /* Theme Toggle Button */
+        /* Theme Toggle Button - Repositioned to TOP LEFT, away from nav */
         .theme-toggle {
             position: fixed;
-            top: 20px;
-            right: 20px;
+            top: 16px;
+            left: 16px;
             z-index: 101;
             background: var(--glass-bg);
             backdrop-filter: blur(12px);
             border-radius: 60px;
-            padding: 10px 20px;
+            padding: 8px 16px;
             cursor: pointer;
             border: 1px solid var(--card-border);
             box-shadow: var(--shadow);
@@ -125,14 +95,46 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
         .theme-toggle:hover {
             transform: scale(1.05);
             border-color: var(--btn-outline);
         }
 
-        /* Hero Section */
+        /* Floating Header Navigation - Centered, no overlap with theme button */
+        .main-header {
+            position: sticky;
+            top: 12px;
+            z-index: 100;
+            display: flex;
+            justify-content: center;
+            margin: 0 12px;
+        }
+        .nav-container {
+            background: var(--header-bg);
+            backdrop-filter: blur(16px);
+            border-radius: 60px;
+            padding: 0.5rem 1.2rem;
+            border: 1px solid var(--card-border);
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+        }
+        .nav-container a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.2s;
+            font-size: 0.85rem;
+            white-space: nowrap;
+            padding: 0.2rem 0;
+        }
+        .nav-container a:hover { color: #3b82f6; transform: translateY(-2px); }
+
+        /* Hero Section - Fixed Formatting */
         .hero {
             min-height: 100vh;
             display: flex;
@@ -140,39 +142,51 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-            padding: 6rem 2rem 4rem;
+            padding: 5rem 1.5rem 3rem;
             background: radial-gradient(circle at 30% 20%, transparent 0%, var(--bg-primary) 85%);
         }
         .hero h1 {
-            font-size: 4.8rem;
+            font-size: 2.8rem;
             font-weight: 700;
             background: linear-gradient(135deg, #3b82f6, #a855f7, #ec489a);
             background-clip: text;
             -webkit-background-clip: text;
             color: transparent;
-            margin-bottom: 1rem;
+            margin-bottom: 0.5rem;
             letter-spacing: -0.02em;
+            line-height: 1.2;
+        }
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
         }
         .hero .highlight {
-            font-size: 1.6rem;
+            font-size: 1.15rem;
             font-weight: 500;
             color: var(--text-secondary);
-            margin-bottom: 1rem;
+            margin-bottom: 0.75rem;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.3rem;
         }
         .hero .desc {
-            max-width: 700px;
-            font-size: 1.2rem;
+            max-width: 600px;
+            font-size: 0.95rem;
             color: var(--text-secondary);
-            margin-bottom: 2rem;
+            margin-bottom: 1.8rem;
+            padding: 0 0.5rem;
+            line-height: 1.5;
         }
         .btn-group {
             display: flex;
-            gap: 1.2rem;
+            gap: 0.8rem;
             flex-wrap: wrap;
             justify-content: center;
         }
         .btn {
-            padding: 0.85rem 2rem;
+            padding: 0.7rem 1.5rem;
             border-radius: 40px;
             font-weight: 600;
             text-decoration: none;
@@ -181,6 +195,7 @@
             background: var(--glass-bg);
             backdrop-filter: blur(5px);
             color: var(--text-primary);
+            font-size: 0.85rem;
         }
         .btn-primary {
             background: linear-gradient(95deg, #2563eb, #7c3aed);
@@ -199,53 +214,54 @@
 
         /* Section Styling */
         .section {
-            padding: 5rem 2rem;
+            padding: 2.5rem 1.2rem;
             max-width: 1300px;
             margin: 0 auto;
         }
         .section-title {
-            font-size: 2.8rem;
+            font-size: 1.8rem;
             font-weight: 700;
             text-align: center;
-            margin-bottom: 3rem;
+            margin-bottom: 2rem;
             background: linear-gradient(135deg, var(--text-primary), var(--btn-outline));
             background-clip: text;
             -webkit-background-clip: text;
             color: transparent;
         }
 
-        /* Skills Grid - Mastered & Future */
+        /* Skills Grid */
         .skills-mastered, .skills-future {
-            margin-bottom: 2.5rem;
+            margin-bottom: 2rem;
         }
         .skills-subtitle {
-            font-size: 1.6rem;
+            font-size: 1.2rem;
             font-weight: 600;
-            margin-bottom: 1.2rem;
+            margin-bottom: 1rem;
             color: var(--text-primary);
             border-left: 4px solid #3b82f6;
-            padding-left: 1rem;
+            padding-left: 0.8rem;
         }
         .skills-grid {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 1rem;
+            gap: 0.7rem;
         }
         .skill-card {
             background: var(--skill-bg);
             backdrop-filter: blur(4px);
             border-radius: 60px;
-            padding: 0.8rem 1.8rem;
+            padding: 0.5rem 1.2rem;
             border: 1px solid var(--card-border);
             font-weight: 500;
             display: flex;
             align-items: center;
-            gap: 0.7rem;
+            gap: 0.5rem;
             transition: all 0.3s;
+            font-size: 0.8rem;
         }
-        .skill-card i { color: #3b82f6; font-size: 1.2rem; }
-        .skill-card:hover { transform: translateY(-5px); border-color: #a855f7; background: var(--accent-glow); }
+        .skill-card i { color: #3b82f6; font-size: 0.9rem; }
+        .skill-card:hover { transform: translateY(-3px); border-color: #a855f7; background: var(--accent-glow); }
         .future-skill {
             border-style: dashed;
             opacity: 0.85;
@@ -254,47 +270,55 @@
         /* Projects Grid */
         .projects-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-            gap: 2rem;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
         }
+        @media (min-width: 640px) {
+            .projects-grid {
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            }
+            .hero h1 { font-size: 3.5rem; }
+            .hero .highlight { font-size: 1.3rem; }
+        }
+        @media (min-width: 1024px) {
+            .hero h1 { font-size: 4.5rem; }
+            .hero .highlight { font-size: 1.5rem; }
+            .section-title { font-size: 2.5rem; }
+            .section { padding: 4rem 2rem; }
+        }
+        
         .project-card {
             background: var(--card-bg);
             backdrop-filter: blur(12px);
-            border-radius: 32px;
-            padding: 1.8rem;
+            border-radius: 28px;
+            padding: 1.3rem;
             border: 1px solid var(--card-border);
             transition: all 0.35s cubic-bezier(0.2, 0.9, 0.4, 1.1);
             box-shadow: var(--shadow);
         }
         .project-card:hover {
-            transform: translateY(-10px) scale(1.02);
+            transform: translateY(-6px);
             border-color: #8b5cf6;
             background: var(--glass-bg);
         }
-        .project-icon { font-size: 2.8rem; margin-bottom: 1rem; }
-        .project-card h3 { font-size: 1.5rem; margin-bottom: 0.8rem; }
-        .project-card p { color: var(--text-secondary); line-height: 1.5; margin-bottom: 1rem; }
+        .project-icon { font-size: 2rem; margin-bottom: 0.8rem; }
+        .project-card h3 { font-size: 1.2rem; margin-bottom: 0.6rem; }
+        .project-card p { color: var(--text-secondary); line-height: 1.45; margin-bottom: 0.8rem; font-size: 0.85rem; }
         .tech-badge {
             display: inline-block;
             background: rgba(59,130,246,0.2);
-            padding: 0.25rem 1rem;
+            padding: 0.2rem 0.7rem;
             border-radius: 30px;
-            font-size: 0.75rem;
-            margin-right: 0.6rem;
-            margin-bottom: 0.6rem;
+            font-size: 0.65rem;
+            margin-right: 0.4rem;
+            margin-bottom: 0.5rem;
             border: 1px solid var(--btn-outline);
-        }
-        .project-links {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.8rem;
-            margin-top: 1rem;
         }
         .project-link {
             display: inline-flex;
             align-items: center;
             gap: 0.4rem;
-            font-size: 0.85rem;
+            font-size: 0.75rem;
             font-weight: 500;
             color: #a5b4fc;
             text-decoration: none;
@@ -306,14 +330,14 @@
         .contact-links {
             display: flex;
             justify-content: center;
-            gap: 2rem;
+            gap: 1rem;
             flex-wrap: wrap;
         }
         .contact-icon {
-            font-size: 1.8rem;
+            font-size: 1.4rem;
             background: var(--glass-bg);
-            width: 70px;
-            height: 70px;
+            width: 52px;
+            height: 52px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -324,37 +348,67 @@
             text-decoration: none;
         }
         .contact-icon:hover {
-            transform: scale(1.15);
+            transform: scale(1.1);
             background: #25D366;
             color: white;
             border-color: #25D366;
         }
         .contact-icon.phone:hover { background: #3b82f6; }
         .contact-icon.email:hover { background: #ea4335; }
+        .contact-icon.linkedin:hover { background: #0077b5; }
+        .contact-icon.github:hover { background: #333; }
+        
+        .contact-info {
+            text-align: center;
+            margin-top: 1.5rem;
+            font-size: 0.8rem;
+            word-break: break-word;
+        }
+        .contact-info p {
+            margin: 0.3rem 0;
+        }
         
         footer {
             text-align: center;
-            padding: 2rem;
-            font-size: 0.85rem;
+            padding: 1.5rem;
+            font-size: 0.7rem;
             border-top: 1px solid var(--card-border);
         }
 
-        @media (max-width: 768px) {
-            .hero h1 { font-size: 2.8rem; }
-            .hero .highlight { font-size: 1.2rem; }
-            .section-title { font-size: 2rem; }
-            .section { padding: 3rem 1.5rem; }
-            .nav-container { gap: 0.8rem; padding: 0.6rem 1.2rem; }
-            .theme-toggle { top: 16px; right: 16px; padding: 6px 14px; font-size: 0.8rem; }
+        /* Tablet/Desktop adjustments */
+        @media (min-width: 768px) {
+            .main-header { top: 16px; margin: 0 20px; }
+            .nav-container { padding: 0.7rem 1.8rem; gap: 1.5rem; }
+            .nav-container a { font-size: 0.95rem; }
+            .theme-toggle { top: 20px; left: 20px; padding: 8px 18px; font-size: 0.9rem; }
+            .contact-icon { width: 60px; height: 60px; font-size: 1.6rem; }
+        }
+
+        /* Adjust for very small screens to prevent overlap */
+        @media (max-width: 480px) {
+            .theme-toggle {
+                top: 10px;
+                left: 10px;
+                padding: 5px 12px;
+                font-size: 0.7rem;
+            }
+            .nav-container {
+                padding: 0.4rem 1rem;
+                gap: 0.7rem;
+            }
+            .nav-container a {
+                font-size: 0.7rem;
+            }
         }
     </style>
 </head>
 <body class="dark-mode">
+    <!-- Theme Toggle - Now positioned at TOP LEFT, away from navigation -->
     <div class="theme-toggle" id="themeToggle">
-        <i class="fas fa-moon" id="themeIcon"></i> <span id="themeText"></span>
+        <i class="fas fa-moon" id="themeIcon"></i> <span id="themeText">Dark</span>
     </div>
 
-    <!-- Sticky Header Navigation -->
+    <!-- Sticky Header Navigation - Centered, no longer blocked -->
     <div class="main-header">
         <div class="nav-container">
             <a href="#home">Home</a>
@@ -367,10 +421,18 @@
     <canvas id="bg-canvas"></canvas>
 
     <div class="content">
-        <!-- Hero Section -->
+        <!-- Hero Section - Fixed formatting as requested -->
         <div class="hero" id="home">
             <h1>Ahmed Ali Osman</h1>
-            <div class="highlight">📊 Data Analyst | SQL • Excel • Power BI Specialist</div>
+            <div class="highlight">
+                <span>📊 Data Analyst</span>
+                <span>|</span>
+                <span>SQL</span>
+                <span>|</span>
+                <span>Excel</span>
+                <span>|</span>
+                <span>Power BI Specialist</span>
+            </div>
             <div class="desc">
                 Turning raw data into actionable intelligence. Expert in data cleaning, visualization, and dashboard creation.
                 I transform complex datasets into strategic business stories.
@@ -381,116 +443,108 @@
             </div>
         </div>
 
-        <!-- Skills Section: Mastered + Future Roadmap -->
+        <!-- Skills Section -->
         <div class="section" id="skills">
             <div class="section-title">⚡ Analytics Arsenal</div>
             <div class="skills-mastered">
                 <div class="skills-subtitle"><i class="fas fa-check-circle" style="color:#22c55e;"></i> Currently Mastered</div>
                 <div class="skills-grid">
-                    <div class="skill-card"><i class="fas fa-database"></i> SQL (MySQL, BigQuery)</div>
-                    <div class="skill-card"><i class="fas fa-file-excel"></i> Advanced Excel / Power Query</div>
+                    <div class="skill-card"><i class="fas fa-database"></i> SQL (MySQL)</div>
+                    <div class="skill-card"><i class="fas fa-file-excel"></i> Advanced Excel</div>
                     <div class="skill-card"><i class="fas fa-chart-pie"></i> Power BI / DAX</div>
                     <div class="skill-card"><i class="fas fa-chart-bar"></i> Data Visualization</div>
                     <div class="skill-card"><i class="fas fa-robot"></i> Data Cleaning & ETL</div>
                 </div>
             </div>
             <div class="skills-future">
-                <div class="skills-subtitle"><i class="fas fa-chart-line" style="color:#f59e0b;"></i> Learning Roadmap (Future)</div>
+                <div class="skills-subtitle"><i class="fas fa-chart-line" style="color:#f59e0b;"></i> Learning Roadmap</div>
                 <div class="skills-grid">
-                    <div class="skill-card future-skill"><i class="fab fa-python"></i> Python (Pandas, NumPy)</div>
+                    <div class="skill-card future-skill"><i class="fab fa-python"></i> Python (Pandas)</div>
                     <div class="skill-card future-skill"><i class="fas fa-chart-line"></i> R / Tidyverse</div>
-                    <div class="skill-card future-skill"><i class="fas fa-square-root-alt"></i> Statistics (Hypothesis Testing)</div>
-                    <div class="skill-card future-skill"><i class="fas fa-cloud"></i> Cloud Analytics (AWS/GCP)</div>
-                    <div class="skill-card future-skill"><i class="fas fa-brain"></i> Machine Learning Basics</div>
+                    <div class="skill-card future-skill"><i class="fas fa-square-root-alt"></i> Statistics</div>
+                    <div class="skill-card future-skill"><i class="fas fa-cloud"></i> Cloud Analytics</div>
+                    <div class="skill-card future-skill"><i class="fas fa-brain"></i> Machine Learning</div>
                     <div class="skill-card future-skill"><i class="fas fa-table"></i> Tableau</div>
-                    <div class="skill-card future-skill"><i class="fas fa-git-alt"></i> Git / Version Control</div>
+                    <div class="skill-card future-skill"><i class="fas fa-git-alt"></i> Git</div>
                 </div>
             </div>
         </div>
 
-        <!-- Projects: Data Science Jobs (3 cards) + Cafe Sales (3 separate cards) with updated links -->
+        <!-- Projects Section -->
         <div class="section" id="projects">
             <div class="section-title">📁 Featured Analytics Projects</div>
             
-            <!-- Data Science Jobs Collection -->
             <div class="skills-subtitle" style="margin-top: 0;"><i class="fas fa-briefcase"></i> Data Science Jobs Analysis</div>
-            <div class="projects-grid" style="margin-bottom: 3rem;">
-                <!-- SQL Project -->
+            <div class="projects-grid" style="margin-bottom: 2rem;">
                 <div class="project-card">
                     <div class="project-icon"><i class="fas fa-database" style="color:#00758f;"></i></div>
                     <h3>DS Jobs: SQL Cleaning</h3>
-                    <p>Comprehensive data cleaning of 1000+ job listings: removed duplicates, standardized job titles, salary estimates, and categorized industries using advanced MySQL queries.</p>
+                    <p>Cleaned 1000+ job listings: removed duplicates, standardized job titles, salary estimates, and categorized industries using advanced MySQL queries.</p>
                     <div><span class="tech-badge">MySQL</span><span class="tech-badge">ETL</span></div>
-                    <a href="https://github.com/AhmedAnalytic/Data-Science-Jobs-Analysis/blob/main/Cleaned_DS_jobs.sql" target="_blank" class="project-link">View SQL Script <i class="fas fa-external-link-alt"></i></a>
+                    <a href="https://github.com/AhmedAnalytic/Data-Science-Jobs-Analysis/blob/main/Cleaned_DS_jobs.sql" target="_blank" class="project-link">View SQL <i class="fas fa-external-link-alt"></i></a>
                 </div>
-                <!-- Excel Project -->
                 <div class="project-card">
                     <div class="project-icon"><i class="fas fa-file-excel" style="color:#1f7b4d;"></i></div>
                     <h3>DS Jobs: Cleaned Excel</h3>
-                    <p>Processed and cleaned dataset in Excel with Power Query. Handled missing values, standardized formats, and prepared structured data for analysis.</p>
+                    <p>Processed dataset in Excel with Power Query. Handled missing values, standardized formats for analysis.</p>
                     <div><span class="tech-badge">Excel</span><span class="tech-badge">Power Query</span></div>
-                    <a href="https://github.com/AhmedAnalytic/Data-Science-Jobs-Analysis/blob/main/Cleaned_DS_jobs.xlsx" target="_blank" class="project-link">Download Excel <i class="fas fa-download"></i></a>
+                    <a href="https://github.com/AhmedAnalytic/Data-Science-Jobs-Analysis/blob/main/Cleaned_DS_jobs.xlsx" target="_blank" class="project-link">Download <i class="fas fa-download"></i></a>
                 </div>
-                <!-- Power BI Viz -->
                 <div class="project-card">
                     <div class="project-icon"><i class="fas fa-chart-pie" style="color:#f2c811;"></i></div>
-                    <h3>DS Jobs: Power BI Dashboard</h3>
-                    <p>Interactive dashboard visualizing job trends, salary distributions, and industry insights with dynamic filters and DAX measures.</p>
+                    <h3>DS Jobs: Power BI</h3>
+                    <p>Interactive dashboard visualizing job trends, salary distributions, and industry insights with DAX measures.</p>
                     <div><span class="tech-badge">Power BI</span><span class="tech-badge">DAX</span></div>
-                    <a href="https://github.com/AhmedAnalytic/Data-Science-Jobs-Analysis/blob/main/Data%20Science%20Job%20Visualization.pbix" target="_blank" class="project-link">Preview Dashboard <i class="fas fa-chart-line"></i></a>
+                    <a href="https://github.com/AhmedAnalytic/Data-Science-Jobs-Analysis/blob/main/Data%20Science%20Job%20Visualization.pbix" target="_blank" class="project-link">Dashboard <i class="fas fa-chart-line"></i></a>
                 </div>
             </div>
 
-            <!-- Cafe Sales Collection -->
             <div class="skills-subtitle"><i class="fas fa-mug-hot"></i> Cafe Sales Data Pipeline</div>
             <div class="projects-grid">
-                <!-- Cafe Excel -->
                 <div class="project-card">
                     <div class="project-icon"><i class="fas fa-file-excel" style="color:#1f7b4d;"></i></div>
-                    <h3>Cafe Sales: Cleaned Excel</h3>
-                    <p>Initial data cleaning and preprocessing of cafe sales data using Excel: removed duplicates, standardized date formats, and corrected product categories.</p>
-                    <div><span class="tech-badge">Excel</span><span class="tech-badge">Data Cleaning</span></div>
-                    <a href="https://github.com/AhmedAnalytic/Cafe-Sales-Data-Cleaning/blob/main/Clean_cafe_sales.xlsx" target="_blank" class="project-link">View Excel File <i class="fas fa-external-link-alt"></i></a>
+                    <h3>Cafe: Cleaned Excel</h3>
+                    <p>Data cleaning of cafe sales: removed duplicates, standardized date formats, corrected product categories.</p>
+                    <div><span class="tech-badge">Excel</span><span class="tech-badge">Cleaning</span></div>
+                    <a href="https://github.com/AhmedAnalytic/Cafe-Sales-Data-Cleaning/blob/main/Clean_cafe_sales.xlsx" target="_blank" class="project-link">View Excel <i class="fas fa-external-link-alt"></i></a>
                 </div>
-                <!-- Cafe SQL -->
                 <div class="project-card">
                     <div class="project-icon"><i class="fas fa-database" style="color:#00758f;"></i></div>
-                    <h3>Cafe Sales: SQL Script</h3>
-                    <p>Advanced MySQL script for data standardization, handling outliers, detecting duplicates, and calculating missing values using complex CASE statements and mathematical validations.</p>
-                    <div><span class="tech-badge">MySQL</span><span class="tech-badge">Query Optimization</span></div>
-                    <a href="https://github.com/AhmedAnalytic/Cafe-Sales-Data-Cleaning/blob/main/Clean_cafe_sales.sql" target="_blank" class="project-link">View SQL Script <i class="fas fa-code"></i></a>
+                    <h3>Cafe: SQL Script</h3>
+                    <p>Advanced MySQL: handling outliers, detecting duplicates, calculating missing values with CASE statements.</p>
+                    <div><span class="tech-badge">MySQL</span><span class="tech-badge">Optimization</span></div>
+                    <a href="https://github.com/AhmedAnalytic/Cafe-Sales-Data-Cleaning/blob/main/Clean_cafe_sales.sql" target="_blank" class="project-link">View SQL <i class="fas fa-code"></i></a>
                 </div>
-                <!-- Cafe Power BI -->
                 <div class="project-card">
                     <div class="project-icon"><i class="fas fa-chart-pie" style="color:#f2c811;"></i></div>
-                    <h3>Cafe Sales: Power BI Dashboard</h3>
-                    <p>Interactive Power BI report with sales KPIs, peak hour analysis, and product performance metrics. Built using DAX measures and custom visuals.</p>
+                    <h3>Cafe: Power BI</h3>
+                    <p>Interactive report with sales KPIs, peak hour analysis, product performance using DAX measures.</p>
                     <div><span class="tech-badge">Power BI</span><span class="tech-badge">DAX</span></div>
-                    <a href="https://github.com/AhmedAnalytic/Cafe-Sales-Data-Cleaning/blob/main/Clean_cafe_sales.pbix" target="_blank" class="project-link">Launch Dashboard <i class="fas fa-chart-simple"></i></a>
+                    <a href="https://github.com/AhmedAnalytic/Cafe-Sales-Data-Cleaning/blob/main/Clean_cafe_sales.pbix" target="_blank" class="project-link">Dashboard <i class="fas fa-chart-simple"></i></a>
                 </div>
             </div>
         </div>
 
-        <!-- Contact Section with WhatsApp, Phone, Email -->
+        <!-- Contact Section -->
         <div class="section" id="contact">
             <div class="section-title">📬 Let's Connect</div>
             <div class="contact-links">
-                <a href="https://github.com/AhmedAnalytic" target="_blank" class="contact-icon"><i class="fab fa-github"></i></a>
+                <a href="https://github.com/AhmedAnalytic" target="_blank" class="contact-icon github"><i class="fab fa-github"></i></a>
                 <a href="https://wa.me/254721237883" target="_blank" class="contact-icon"><i class="fab fa-whatsapp"></i></a>
-                <a href="tel:+254721237883" target="_blank" class="contact-icon phone"><i class="fas fa-phone-alt"></i></a>
-                <a href="mailto:ahmeyali2236@gmail.com" target="_blank" class="contact-icon email"><i class="fas fa-envelope"></i></a>
-                <a href="https://www.linkedin.com/in/ahmed-ali-883129359" target="_blank" class="contact-icon"><i class="fab fa-linkedin-in"></i></a>
+                <a href="tel:+254721237883" class="contact-icon phone"><i class="fas fa-phone-alt"></i></a>
+                <a href="mailto:ahmeyali2236@gmail.com" class="contact-icon email"><i class="fas fa-envelope"></i></a>
+                <a href="https://www.linkedin.com/in/ahmed-ali-883129359" target="_blank" class="contact-icon linkedin"><i class="fab fa-linkedin-in"></i></a>
             </div>
-            <p style="text-align: center; margin-top: 2rem; font-size: 1rem;">
-                📞 <strong>Phone / WhatsApp:</strong> +254 721 237883 &nbsp;&nbsp;|&nbsp;&nbsp;
-                📧 <strong>Email:</strong> ahmeyali2236@gmail.com
-            </p>
-            <p style="text-align: center; margin-top: 0.5rem; color: var(--text-secondary);">📍 Nairobi, Kenya | Open for freelance & full-time opportunities</p>
+            <div class="contact-info">
+                <p>📞 <strong>Phone / WhatsApp:</strong> +254 721 237883</p>
+                <p>📧 <strong>Email:</strong> ahmeyali2236@gmail.com</p>
+                <p style="margin-top: 0.5rem;">📍 Nairobi, Kenya | Open for freelance & full-time opportunities</p>
+            </div>
         </div>
         <footer>© 2026 Ahmed Ali Osman — From Raw Data to Actionable Intelligence ✨</footer>
     </div>
 
-    <!-- Three.js Enhanced 3D Scene: Beautiful Particle Galaxy + Rotating Core -->
+    <!-- Three.js 3D Scene (Performance Optimized) -->
     <script type="importmap">
         {
             "imports": {
@@ -512,9 +566,9 @@
         
         const renderer = new THREE.WebGLRenderer({ canvas, alpha: false });
         renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.setPixelRatio(window.devicePixelRatio);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
         
-        // Lights: dynamic & beautiful
+        // Lights
         const ambientLight = new THREE.AmbientLight(0x1a1f2e, 0.5);
         scene.add(ambientLight);
         const mainLight = new THREE.DirectionalLight(0xffffff, 1);
@@ -530,19 +584,17 @@
         backLight.position.set(0, 2, -6);
         scene.add(backLight);
         
-        // Central elegant object: Icosahedron with wireframe + glow
+        // Central Icosahedron
         const coreGeo = new THREE.IcosahedronGeometry(1.3, 0);
         const coreMat = new THREE.MeshStandardMaterial({ color: 0x3b82f6, emissive: 0x1e3a8a, emissiveIntensity: 0.7, metalness: 0.6, roughness: 0.2 });
         const coreMesh = new THREE.Mesh(coreGeo, coreMat);
         scene.add(coreMesh);
         
-        // Wireframe outer shell
         const wireframeGeo = new THREE.IcosahedronGeometry(1.45, 0);
         const wireframeMat = new THREE.MeshBasicMaterial({ color: 0x8b5cf6, wireframe: true, transparent: true, opacity: 0.25 });
         const wireframeObj = new THREE.Mesh(wireframeGeo, wireframeMat);
         scene.add(wireframeObj);
         
-        // Rotating rings
         const ringGeo = new THREE.TorusGeometry(1.9, 0.05, 128, 400);
         const ringMat = new THREE.MeshStandardMaterial({ color: 0xa855f7, emissive: 0x6d28d9, emissiveIntensity: 0.5 });
         const ring = new THREE.Mesh(ringGeo, ringMat);
@@ -553,9 +605,10 @@
         const ring2 = new THREE.Mesh(ring2Geo, ring2Mat);
         scene.add(ring2);
         
-        // Floating data cubes (data points)
+        // Floating cubes (performance optimized)
+        const cubeCount = window.innerWidth < 768 ? 60 : 100;
         const cubes = [];
-        for(let i = 0; i < 120; i++) {
+        for(let i = 0; i < cubeCount; i++) {
             const size = 0.06 + Math.random() * 0.09;
             const matCube = new THREE.MeshStandardMaterial({ color: 0x60a5fa, emissive: 0x2563eb, emissiveIntensity: 0.2 });
             const cube = new THREE.Mesh(new THREE.BoxGeometry(size, size, size), matCube);
@@ -569,8 +622,8 @@
             cubes.push(cube);
         }
         
-        // Particle Galaxy (beautiful dust)
-        const particleCount = 4000;
+        // Particles
+        const particleCount = window.innerWidth < 768 ? 2000 : 3500;
         const particleGeo = new THREE.BufferGeometry();
         const posArray = new Float32Array(particleCount * 3);
         for(let i = 0; i < particleCount; i++) {
@@ -586,8 +639,8 @@
         const particles = new THREE.Points(particleGeo, particleMat);
         scene.add(particles);
         
-        // Starfield background
-        const starCount = 2000;
+        // Stars
+        const starCount = window.innerWidth < 768 ? 1200 : 2000;
         const starGeo = new THREE.BufferGeometry();
         const starPos = [];
         for(let i = 0; i < starCount; i++) {
@@ -642,11 +695,11 @@
             renderer.setSize(window.innerWidth, window.innerHeight);
         });
         
-        // Theme switch with scene color update
+        // Theme Toggle Logic
         const themeToggle = document.getElementById('themeToggle');
-        const body = document.body;
+        const bodyEl = document.body;
         const themeIcon = document.getElementById('themeIcon');
-        const themeText = document.getElementById('themeText');
+        const themeTextSpan = document.getElementById('themeText');
         
         function updateThemeColors(theme) {
             if(theme === 'light') {
@@ -673,20 +726,22 @@
         }
         
         themeToggle.addEventListener('click', () => {
-            if(body.classList.contains('dark-mode')) {
-                body.classList.remove('dark-mode');
-                body.classList.add('light-mode');
+            if(bodyEl.classList.contains('dark-mode')) {
+                bodyEl.classList.remove('dark-mode');
+                bodyEl.classList.add('light-mode');
                 themeIcon.className = 'fas fa-sun';
+                themeTextSpan.innerText = 'Light';
                 updateThemeColors('light');
             } else {
-                body.classList.remove('light-mode');
-                body.classList.add('dark-mode');
+                bodyEl.classList.remove('light-mode');
+                bodyEl.classList.add('dark-mode');
                 themeIcon.className = 'fas fa-moon';
+                themeTextSpan.innerText = 'Dark';
                 updateThemeColors('dark');
             }
         });
         
-        if(body.classList.contains('dark-mode')) updateThemeColors('dark');
+        if(bodyEl.classList.contains('dark-mode')) updateThemeColors('dark');
         else updateThemeColors('light');
         
         // Interactive mouse light
