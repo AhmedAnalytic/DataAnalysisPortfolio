@@ -351,7 +351,7 @@
 </head>
 <body class="dark-mode">
     <div class="theme-toggle" id="themeToggle">
-        <i class="fas fa-moon" id="themeIcon"></i> <span id="themeText">Dark</span>
+        <i class="fas fa-moon" id="themeIcon"></i> <span id="themeText"></span>
     </div>
 
     <!-- Sticky Header Navigation -->
@@ -677,13 +677,11 @@
                 body.classList.remove('dark-mode');
                 body.classList.add('light-mode');
                 themeIcon.className = 'fas fa-sun';
-                themeText.innerText = 'Light';
                 updateThemeColors('light');
             } else {
                 body.classList.remove('light-mode');
                 body.classList.add('dark-mode');
                 themeIcon.className = 'fas fa-moon';
-                themeText.innerText = 'Dark';
                 updateThemeColors('dark');
             }
         });
